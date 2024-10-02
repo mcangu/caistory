@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz sobre Cádiz - Historia</title>
+    <link
+      rel="stylesheet"
+      href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
+    />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding-bottom: 100px; /* espacio para el footer */
+        font-family: "Roboto", sans-serif;
+      }
+
+      .quiz-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        padding-bottom: 100px; /* espacio para el footer fijo */
+      }
+
+      .question {
+        font-size: 1.5em;
+        margin-bottom: 25px;
+        font-weight: bold;
+        line-height: 1.6;
+      }
+
+      .mdl-card {
+        width: 100%;
+      }
+
+      .mdl-radio__label {
+        font-size: 1.2em;
+        font-weight: bold;
+        line-height: 1.6;
+      }
+
+      .header {
+        background-color: #3f51b5;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header img {
+        height: 50px;
+        width: auto;
+      }
+
+      .header-title {
+        flex-grow: 1;
+        text-align: center;
+        padding-left: 10px;
+      }
+
+      .mdl-radio {
+        display: block;
+        margin: 15px 0;
+      }
+
+      .actions-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #ffffff;
+        padding: 10px 20px;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: space-between;
+        z-index: 1000;
+      }
+
+      .mdl-button {
+        margin: 0 10px;
+      }
+
+      /* Ajustes de fuente para dispositivos móviles */
+      @media (max-width: 600px) {
+        .question {
+          font-size: 1.2em;
+        }
+
+        .mdl-radio__label {
+          font-size: 1em;
+        }
+
+        .header {
+          font-size: 1.3em;
+          padding: 10px;
+        }
+
+        .header img {
+          height: 40px;
+        }
+
+        .mdl-button {
+          font-size: 0.9em;
+        }
+
+        .mdl-radio {
+          margin: 20px 0;
+        }
+
+        .actions-container {
+          flex-direction: column;
+          gap: 10px;
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="header-title">Orgullosos de Nuestra Historia OM2024</div>
+      <img src="lapepa.jpg" alt="Logo" id="header-logo" />
+    </header>
+
+    <div class="quiz-container mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Historia de Cádiz</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        <div class="question" id="question">Cargando pregunta...</div>
+        <form id="quizForm">
+          <div id="options"></div>
+        </form>
+        <div
+          id="result"
+          class="mdl-card__actions mdl-card--border"
+          style="display: none"
+        ></div>
+      </div>
+    </div>
+
+    <div class="actions-container">
+      <button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary"
+        onclick="loadQuestion()"
+      >
+        Siguiente Pregunta
+      </button>
+      <button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="checkAnswer()"
+      >
+        Verificar Respuesta
+      </button>
+    </div>
+
+    <script>
+      // Preguntas sobre los diferentes temas de Cádiz
+      const questions = {
+        "Cádiz Fenicio": [
+          {
+            question: "¿Cuál era el nombre fenicio de Cádiz?",
+            options: ["Gadir", "Kadesh", "Tartessos", "Hesperia"],
+            answer: "Gadir",
+          },
+          {
+            question: "¿En qué siglo fue fundada Cádiz por los fenicios?",
+            options: [
+              "Siglo XII a.C.",
+              "Siglo VIII a.C.",
+              "Siglo V a.C.",
+              "Siglo III a.C.",
+            ],
+            answer: "Siglo XII a.C.",
+          },
+          {
+            question: "¿Qué civilización fundó Cádiz?",
+            options: ["Fenicios", "Griegos", "Romanos", "Cartagineses"],
+            answer: "Fenicios",
+          },
+          {
+            question: "¿Cuál fue la razón principal para fundar Cádiz?",
+            options: ["Comercio", "Expansión militar", "Religión", "Minería"],
+            answer: "Comercio",
+          },
+          {
+            question: "¿Qué otro nombre se utilizaba para los fenicios?",
+            options: ["Púnicos", "Troyanos", "Aqueos", "Latinos"],
+            answer: "Púnicos",
+          },
+        ],
+        "Cádiz Romano": [
+          {
+            question:
+              "¿Qué emperador romano otorgó a Cádiz el título de municipium?",
+            options: ["Julio César", "Augusto", "Trajano", "Nerón"],
+            answer: "Julio César",
+          },
+          {
+            question: "¿Cuál era el nombre romano de Cádiz?",
+            options: ["Gades", "Carthago", "Baelo", "Astigi"],
+            answer: "Gades",
+          },
+          {
+            question:
+              "¿Qué importante recurso se explotaba en Gades durante la época romana?",
+            options: ["Garum", "Aceite de oliva", "Vino", "Hierro"],
+            answer: "Garum",
+          },
+          {
+            question:
+              "¿Qué infraestructura construyeron los romanos para facilitar el comercio en Gades?",
+            options: ["Puertos", "Calzadas", "Acueductos", "Termas"],
+            answer: "Puertos",
+          },
+          {
+            question:
+              "¿Qué dios romano se identificaba con Melkart, el dios fenicio de Gadir?",
+            options: ["Hércules", "Júpiter", "Marte", "Apolo"],
+            answer: "Hércules",
+          },
+        ],
+        "Cádiz Emporio del Orbe": [
+          {
+            question:
+              "¿Qué producto era el principal motor comercial de Cádiz durante el siglo XVIII?",
+            options: ["Vino", "Aceite de oliva", "Tabaco", "Oro de América"],
+            answer: "Oro de América",
+          },
+          {
+            question:
+              "¿Qué país tuvo la mayor relación comercial con Cádiz en el siglo XVIII?",
+            options: ["Inglaterra", "Francia", "Portugal", "Estados Unidos"],
+            answer: "Inglaterra",
+          },
+          {
+            question: "¿Qué papel jugó Cádiz durante el comercio con América?",
+            options: [
+              "Centro de distribución",
+              "Puerto militar",
+              "Zona agrícola",
+              "Refugio de piratas",
+            ],
+            answer: "Centro de distribución",
+          },
+          {
+            question:
+              "¿Qué institución se trasladó de Sevilla a Cádiz en 1717?",
+            options: [
+              "Casa de la Contratación",
+              "Real Chancillería",
+              "La Lonja",
+              "Banco de España",
+            ],
+            answer: "Casa de la Contratación",
+          },
+          {
+            question:
+              "¿Cuál era el principal puerto comercial de Cádiz en el siglo XVIII?",
+            options: [
+              "Puerto de Santa María",
+              "Puerto de Gades",
+              "Puerto Real",
+              "Puerto de la Caleta",
+            ],
+            answer: "Puerto de Santa María",
+          },
+        ],
+        "Constitución de 1812": [
+          {
+            question:
+              "¿Cómo se llama la Constitución de 1812 promulgada en Cádiz?",
+            options: [
+              "La Pepa",
+              "La Gaditana",
+              "La Constitución del Orbe",
+              "La Magna",
+            ],
+            answer: "La Pepa",
+          },
+          {
+            question: "¿En qué fecha se promulgó la Constitución de 1812?",
+            options: [
+              "19 de marzo de 1812",
+              "25 de diciembre de 1810",
+              "2 de mayo de 1813",
+              "12 de octubre de 1811",
+            ],
+            answer: "19 de marzo de 1812",
+          },
+          {
+            question: "¿Qué derechos reconocía la Constitución de 1812?",
+            options: [
+              "Sufragio universal masculino",
+              "Libertad de prensa",
+              "Derecho al trabajo",
+              "Igualdad de género",
+            ],
+            answer: "Libertad de prensa",
+          },
+          {
+            question:
+              "¿Qué tipo de gobierno establecía la Constitución de 1812?",
+            options: [
+              "Monarquía constitucional",
+              "República",
+              "Monarquía absoluta",
+              "Dictadura",
+            ],
+            answer: "Monarquía constitucional",
+          },
+          {
+            question:
+              "¿Dónde se celebraron las sesiones para redactar la Constitución de 1812?",
+            options: [
+              "Oratorio de San Felipe Neri",
+              "Catedral de Cádiz",
+              "Ayuntamiento de Cádiz",
+              "Palacio de las Cortes",
+            ],
+            answer: "Oratorio de San Felipe Neri",
+          },
+        ],
+      };
+
+      function getRandomQuestion() {
+        const topics = Object.keys(questions);
+        const topic = topics[Math.floor(Math.random() * topics.length)];
+        const questionSet = questions[topic];
+        return questionSet[Math.floor(Math.random() * questionSet.length)];
+      }
+
+      function loadQuestion() {
+        const currentQuestion = getRandomQuestion();
+        const questionContainer = document.getElementById("question");
+        const optionsContainer = document.getElementById("options");
+
+        questionContainer.textContent = currentQuestion.question;
+        optionsContainer.innerHTML = "";
+
+        currentQuestion.options.forEach((option, index) => {
+          const optionId = `option-${index}`;
+          const label = document.createElement("label");
+          label.className = "mdl-radio mdl-js-radio mdl-js-ripple-effect";
+          label.setAttribute("for", optionId);
+
+          const input = document.createElement("input");
+          input.type = "radio";
+          input.id = optionId;
+          input.className = "mdl-radio__button";
+          input.name = "option";
+          input.value = option;
+
+          label.appendChild(input);
+
+          const span = document.createElement("span");
+          span.className = "mdl-radio__label";
+          span.textContent = option;
+
+          label.appendChild(span);
+          optionsContainer.appendChild(label);
+        });
+
+        window.currentAnswer = currentQuestion.answer;
+        document.getElementById("result").style.display = "none";
+      }
+
+      function checkAnswer() {
+        const options = document.getElementsByName("option");
+        let selectedOption = null;
+
+        options.forEach((option) => {
+          if (option.checked) {
+            selectedOption = option.value;
+          }
+        });
+
+        const resultContainer = document.getElementById("result");
+        if (selectedOption) {
+          if (selectedOption === window.currentAnswer) {
+            resultContainer.textContent = "¡Correcto! 🎉";
+          } else {
+            resultContainer.textContent = `Incorrecto. La respuesta correcta es: ${window.currentAnswer}`;
+          }
+        } else {
+          resultContainer.textContent = "Por favor, selecciona una opción.";
+        }
+
+        resultContainer.style.display = "block";
+      }
+
+      // Cargar la primera pregunta al inicio
+      window.onload = loadQuestion;
+    </script>
+  </body>
+</html>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Historia de Cádiz</title>
+    <title>Orgullosos de Nuestra Historia</title>
     <link
       rel="stylesheet"
       href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
@@ -28,41 +28,74 @@
       #result-section {
         display: none;
       }
+
+      .tema-boton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin: 10px;
+      }
+
+      .tema-logo {
+        width: 30px;
+        height: 30px;
+      }
     </style>
   </head>
 
   <body>
     <div id="main-section" class="quiz-container mdl-card mdl-shadow--2dp">
       <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">Orgullosos de nuestra Historia</h2>
+        <h2 class="mdl-card__title-text">Orgullosos de Nuestra Historia</h2>
       </div>
       <div class="mdl-card__supporting-text">
         <p>Selecciona un tema para comenzar:</p>
         <div>
-          <button
-            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onclick="iniciarCuestionario('Cádiz Fenicio')"
-          >
-            Cádiz Fenicio
-          </button>
-          <button
-            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onclick="iniciarCuestionario('Cádiz Romano')"
-          >
-            Cádiz Romano
-          </button>
-          <button
-            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onclick="iniciarCuestionario('Cádiz Emporio del Orbe')"
-          >
-            Cádiz Emporio del Orbe
-          </button>
-          <button
-            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onclick="iniciarCuestionario('Constitución de 1812')"
-          >
-            Constitución de 1812
-          </button>
+          <div class="tema-boton">
+            <img src="fenicio.jpg" alt="Logo Cádiz Fenicio" class="tema-logo" />
+            <button
+              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+              onclick="iniciarCuestionario('Cádiz Fenicio')"
+            >
+              Cádiz Fenicio
+            </button>
+          </div>
+          <div class="tema-boton">
+            <img src="romano.jpg" alt="Logo Cádiz Romano" class="tema-logo" />
+            <button
+              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+              onclick="iniciarCuestionario('Cádiz Romano')"
+            >
+              Cádiz Romano
+            </button>
+          </div>
+          <div class="tema-boton">
+            <img
+              src="pirata.jpg"
+              alt="Logo Cádiz Emporio del Orbe"
+              class="tema-logo"
+            />
+            <button
+              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+              onclick="iniciarCuestionario('Cádiz Emporio del Orbe')"
+            >
+              Cádiz Emporio del Orbe
+            </button>
+          </div>
+          <div class="tema-boton">
+            <img
+              src="lapepa.jpg"
+              alt="Logo Constitución de 1812"
+              class="tema-logo"
+            />
+            <button
+              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+              onclick="iniciarCuestionario('Constitución de 1812')"
+            >
+              Constitución de 1812
+            </button>
+          </div>
         </div>
       </div>
     </div>

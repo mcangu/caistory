@@ -23,11 +23,16 @@
       .mdl-button {
         margin: 5px;
       }
+
+      #quiz-section,
+      #result-section {
+        display: none;
+      }
     </style>
   </head>
 
   <body>
-    <div class="quiz-container mdl-card mdl-shadow--2dp">
+    <div id="main-section" class="quiz-container mdl-card mdl-shadow--2dp">
       <div class="mdl-card__title">
         <h2 class="mdl-card__title-text">
           Juego de Preguntas y Respuestas - Historia de Cádiz
@@ -38,31 +43,62 @@
         <div>
           <button
             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onclick="iniciarJuego('Cádiz Fenicio')"
+            onclick="iniciarCuestionario('Cádiz Fenicio')"
           >
             Cádiz Fenicio
           </button>
           <button
             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onclick="iniciarJuego('Cádiz Romano')"
+            onclick="iniciarCuestionario('Cádiz Romano')"
           >
             Cádiz Romano
           </button>
           <button
             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onclick="iniciarJuego('Cádiz Emporio del Orbe')"
+            onclick="iniciarCuestionario('Cádiz Emporio del Orbe')"
           >
             Cádiz Emporio del Orbe
           </button>
           <button
             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onclick="iniciarJuego('Constitución de 1812')"
+            onclick="iniciarCuestionario('Constitución de 1812')"
           >
             Constitución de 1812
           </button>
         </div>
-        <div id="pregunta"></div>
       </div>
+    </div>
+
+    <div id="quiz-section" class="quiz-container mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Cuestionario</h2>
+      </div>
+      <div class="mdl-card__supporting-text" id="pregunta-container"></div>
+      <button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+        onclick="siguientePregunta()"
+      >
+        Siguiente Pregunta
+      </button>
+    </div>
+
+    <div id="result-section" class="quiz-container mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Resultados</h2>
+      </div>
+      <div class="mdl-card__supporting-text" id="resultados-container"></div>
+      <button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="volverAlInicio()"
+      >
+        Volver a la pantalla principal
+      </button>
+      <button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="repetirCuestionario()"
+      >
+        Repetir Cuestionario
+      </button>
     </div>
 
     <script>
@@ -70,84 +106,212 @@
         "Cádiz Fenicio": [
           {
             pregunta: "¿Quiénes fundaron Gadir (Cádiz)?",
-            respuesta: "Los fenicios",
+            opciones: [
+              "Los griegos",
+              "Los romanos",
+              "Los fenicios",
+              "Los cartagineses",
+            ],
+            respuestaCorrecta: "Los fenicios",
           },
           {
             pregunta: "¿En qué siglo fue fundada Gadir?",
-            respuesta: "Siglo XI a.C.",
+            opciones: [
+              "Siglo VIII a.C.",
+              "Siglo XI a.C.",
+              "Siglo VI a.C.",
+              "Siglo III a.C.",
+            ],
+            respuestaCorrecta: "Siglo XI a.C.",
           },
           {
             pregunta:
               "¿Cuál era la principal actividad económica de los fenicios en Gadir?",
-            respuesta: "El comercio",
+            opciones: [
+              "La agricultura",
+              "La minería",
+              "El comercio",
+              "La pesca",
+            ],
+            respuestaCorrecta: "El comercio",
           },
         ],
         "Cádiz Romano": [
           {
             pregunta: "¿Cómo se llamaba Cádiz durante la época romana?",
-            respuesta: "Gades",
+            opciones: ["Gadir", "Gades", "Hispalis", "Tartessos"],
+            respuestaCorrecta: "Gades",
           },
           {
             pregunta:
               "¿Qué emperador romano otorgó el estatus de municipio a Gades?",
-            respuesta: "Julio César",
+            opciones: ["Augusto", "Julio César", "Trajano", "Nerón"],
+            respuestaCorrecta: "Julio César",
           },
           {
             pregunta:
               "¿Qué producto era muy valorado por los romanos procedente de Gades?",
-            respuesta: "El garum",
+            opciones: ["Aceite de oliva", "El garum", "El trigo", "El vino"],
+            respuestaCorrecta: "El garum",
           },
         ],
         "Cádiz Emporio del Orbe": [
           {
             pregunta: "¿Por qué Cádiz fue conocida como el Emporio del Orbe?",
-            respuesta: "Por su importancia comercial durante el siglo XVIII",
+            opciones: [
+              "Por su importancia comercial durante el siglo XVIII",
+              "Por ser una ciudad fortificada",
+              "Por su riqueza minera",
+              "Por su producción de vinos",
+            ],
+            respuestaCorrecta:
+              "Por su importancia comercial durante el siglo XVIII",
           },
           {
             pregunta:
               "¿Qué tipo de comercio era relevante en Cádiz durante el siglo XVIII?",
-            respuesta: "Comercio con América",
+            opciones: [
+              "Comercio con América",
+              "Comercio con Asia",
+              "Comercio con África",
+              "Comercio con Europa del Este",
+            ],
+            respuestaCorrecta: "Comercio con América",
           },
           {
             pregunta:
               "¿Cuál era el papel de Cádiz en el comercio español en el siglo XVIII?",
-            respuesta: "Era un puerto principal",
+            opciones: [
+              "Era un puerto secundario",
+              "Era un puerto principal",
+              "Era un centro de producción textil",
+              "Era una ciudad minera",
+            ],
+            respuestaCorrecta: "Era un puerto principal",
           },
         ],
         "Constitución de 1812": [
           {
             pregunta: "¿Cómo se conoce popularmente a la Constitución de 1812?",
-            respuesta: "La Pepa",
+            opciones: ["La Pepa", "La Gades", "La Libertadora", "La Primera"],
+            respuestaCorrecta: "La Pepa",
           },
           {
             pregunta: "¿En qué año se promulgó la Constitución de 1812?",
-            respuesta: "1812",
+            opciones: ["1808", "1810", "1812", "1814"],
+            respuestaCorrecta: "1812",
           },
           {
             pregunta: "¿Dónde fue promulgada la Constitución de 1812?",
-            respuesta: "En Cádiz",
+            opciones: ["Madrid", "Sevilla", "Cádiz", "Barcelona"],
+            respuestaCorrecta: "Cádiz",
           },
         ],
       };
 
-      function iniciarJuego(tema) {
-        const temaPreguntas = preguntas[tema];
-        const indiceAleatorio = Math.floor(
-          Math.random() * temaPreguntas.length
-        );
-        const preguntaSeleccionada = temaPreguntas[indiceAleatorio];
+      let preguntasSeleccionadas = [];
+      let respuestasUsuario = [];
+      let indicePreguntaActual = 0;
 
-        document.getElementById("pregunta").innerHTML = `
-                <h4>${preguntaSeleccionada.pregunta}</h4>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-                    onclick="mostrarRespuesta('${preguntaSeleccionada.respuesta}')">Mostrar Respuesta</button>
+      function iniciarCuestionario(tema) {
+        // Selecciona tres preguntas aleatorias del tema elegido
+        preguntasSeleccionadas = [];
+        respuestasUsuario = [];
+        indicePreguntaActual = 0;
+        const temaPreguntas = [...preguntas[tema]];
+        while (preguntasSeleccionadas.length < 3 && temaPreguntas.length > 0) {
+          const indiceAleatorio = Math.floor(
+            Math.random() * temaPreguntas.length
+          );
+          preguntasSeleccionadas.push(
+            temaPreguntas.splice(indiceAleatorio, 1)[0]
+          );
+        }
+
+        // Muestra la primera pregunta
+        document.getElementById("main-section").style.display = "none";
+        document.getElementById("result-section").style.display = "none";
+        document.getElementById("quiz-section").style.display = "block";
+        mostrarPregunta();
+      }
+
+      function mostrarPregunta() {
+        const pregunta = preguntasSeleccionadas[indicePreguntaActual];
+        const preguntaContainer = document.getElementById("pregunta-container");
+        preguntaContainer.innerHTML = `
+                <h4>${pregunta.pregunta}</h4>
+                ${pregunta.opciones
+                  .map(
+                    (opcion, i) => `
+                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="opcion-${indicePreguntaActual}-${i}">
+                        <input type="radio" id="opcion-${indicePreguntaActual}-${i}" class="mdl-radio__button" name="pregunta" value="${opcion}">
+                        <span class="mdl-radio__label">${opcion}</span>
+                    </label><br>
+                `
+                  )
+                  .join("")}
             `;
       }
 
-      function mostrarRespuesta(respuesta) {
-        document.getElementById("pregunta").innerHTML += `
-                <p><strong>Respuesta:</strong> ${respuesta}</p>
-            `;
+      function siguientePregunta() {
+        const opciones = document.getElementsByName("pregunta");
+        let respuestaUsuario = "";
+        for (const opcion of opciones) {
+          if (opcion.checked) {
+            respuestaUsuario = opcion.value;
+            break;
+          }
+        }
+
+        if (respuestaUsuario === "") {
+          alert("Por favor, selecciona una respuesta antes de continuar.");
+          return;
+        }
+
+        respuestasUsuario.push({
+          pregunta: preguntasSeleccionadas[indicePreguntaActual].pregunta,
+          respuestaUsuario,
+          respuestaCorrecta:
+            preguntasSeleccionadas[indicePreguntaActual].respuestaCorrecta,
+        });
+
+        indicePreguntaActual++;
+
+        if (indicePreguntaActual < preguntasSeleccionadas.length) {
+          mostrarPregunta();
+        } else {
+          mostrarResultados();
+        }
+      }
+
+      function mostrarResultados() {
+        let correctas = 0;
+        respuestasUsuario.forEach((respuesta) => {
+          if (respuesta.respuestaUsuario === respuesta.respuestaCorrecta) {
+            correctas++;
+          }
+        });
+
+        document.getElementById("quiz-section").style.display = "none";
+        document.getElementById("result-section").style.display = "block";
+
+        const resultadosContainer = document.getElementById(
+          "resultados-container"
+        );
+        resultadosContainer.innerHTML = `<h4>Has acertado ${correctas} de ${preguntasSeleccionadas.length} preguntas.</h4>`;
+      }
+
+      function volverAlInicio() {
+        document.getElementById("result-section").style.display = "none";
+        document.getElementById("main-section").style.display = "block";
+      }
+
+      function repetirCuestionario() {
+        document.getElementById("result-section").style.display = "none";
+        document.getElementById("quiz-section").style.display = "block";
+        indicePreguntaActual = 0;
+        respuestasUsuario = [];
+        mostrarPregunta();
       }
     </script>
   </body>
